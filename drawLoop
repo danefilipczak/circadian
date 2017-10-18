@@ -1,0 +1,79 @@
+
+
+function draw(){
+
+if(nodes.length>1){
+	if(nodes.length<maxSize){
+    ballrolling = true;
+    
+
+
+      if(split){
+        edgeSplit(sThresh);
+      }
+      forceMult = 1;
+      
+
+   
+      localAverage(pForce*forceMult);
+       rejectAll(rThresh, rForce*forceMult);
+    maintainDistance(dForce*forceMult, distance);
+      
+      
+      //
+      somethingDied=false;
+    } else {
+
+      //if(forceMult>0){forceMult-=0.01}
+      if(forceMult>0){forceMult-=0.005}
+      if(forceMult<0){forceMult=0}
+        attractNeighbors(aThresh, aForce*0.5);
+      rejectAll(rThresh, rForce*0.5*0.5);
+    }
+
+  } else if(ballrolling){//new orgamisn 
+    makeZygote();
+  }
+
+   
+
+    //localAverage(pForce*forceMult);
+
+      
+
+
+    
+    
+  	
+  	for(var i=0;i<nodes.length;i++){
+  		nodes[i].applyForce();
+  		nodes[i].updateLinks();
+      if(ageing){nodes[i].age()};
+  	}
+    var dcz = targetCameraZ - camera.position.z;
+    camera.position.z += dcz * cameraEasing;
+	 
+
+    //camera.position.z = 5;
+
+
+
+	if(rotate){group.rotation.y += 0.003};
+
+
+  // update the picking ray with the camera and mouse position
+  raycaster.setFromCamera( mouse, camera );
+
+  // calculate objects intersecting the picking ray
+  var intersects = raycaster.intersectObjects( scene.children, true );
+  //console.log(intersects[0].userData);
+
+  for ( var i = 0; i < intersects.length; i++ ) {
+
+    intersects[ i ].object.material.color.set( 0xff0000 );
+    console.log(intersects[i].object.userData);
+
+  }
+
+	//group.position.y = 0;
+}
