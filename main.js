@@ -188,14 +188,14 @@ window.onload = function(){
   }
   console.log(keys);
 
-  Soundfont.instrument(ac, 'bassoon').then(function (player) {
-    bassoon = player;
+  // Soundfont.instrument(ac, 'bassoon').then(function (player) {
+  //   bassoon = player;
     
-    bassoon.connect(delay);
-    loaded = true;
+  //   bassoon.connect(delay);
+  //   loaded = true;
     
-    makeZygote();
-  });
+  //   makeZygote();
+  // });
   // loaded = true;
 
   // //initialize notes
@@ -213,7 +213,7 @@ window.onload = function(){
 
  clock = setInterval(cycle, lifespan/60*1000)
 
- // makeZygote();
+ makeZygote();
 }
 
 
@@ -373,7 +373,7 @@ scene.add( light );
 // scene.add( directionalLight );
 // var ambientLight = new THREE.AmbientLight( 0xffffff, 0.1 );
 // scene.add( ambientLight );
-scene.background = new THREE.Color( 'orange' );
+scene.background = new THREE.Color( 'olive' );
 
 
 

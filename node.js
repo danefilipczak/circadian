@@ -33,8 +33,13 @@ function Node(vec){
 	// this.playNote();
 	
 	// console.log(this.note);
-	this.i = new CorAnglais(ac);
-	this.i.play(this.note, 0, this.lifespan/60);
+	if(this.note<CorAnglais.prototype.range.low){
+		this.i = new Bassoon(ac);
+	} else {
+		this.i = new CorAnglais(ac);
+	}
+	
+	this.i.play(this.note-12, 0, this.lifespan/60);
 	// this.i.stop(this.lifespan/60);
 
 	//this.lines=[];
@@ -67,6 +72,8 @@ function Node(vec){
 // }
 
 Node.prototype.age = function(){
+	// this.i.gain(Math.random())
+	// this.i.pan((Math.random()*2)-1)
 	this.deathClock--;
 	if(this.deathClock<0){
 		this.die();
@@ -75,6 +82,9 @@ Node.prototype.age = function(){
 	this.material.color.r = c;
 	this.material.color.g = c;
 	this.material.color.b = c;
+	this.material.transparent = true;
+	this.material.opacity = 1-c;
+	// console.log(c)
 }
 
 
@@ -192,7 +202,7 @@ Node.prototype.initializeLinks = function(){
 		var geometry = new THREE.Geometry();
 		geometry.vertices.push(this.sphere.position);
 		geometry.vertices.push(this.linkedTo[i].sphere.position);
-		var material = new THREE.LineBasicMaterial({ color: 0x0000ff });
+		var material = new THREE.LineBasicMaterial({ color: '0x0000ff' });
 		material.opacity = 0;
 		material.transparent=false;
 		if(!wireframe){material.transparent = true};
@@ -212,7 +222,7 @@ Node.prototype.updateLinks = function(){
 		this.lines[i].geometry.vertices[0] = this.sphere.position;
 		this.lines[i].geometry.vertices[1] = this.linkedTo[i].sphere.position;
 		this.lines[i].geometry.verticesNeedUpdate = true;
-		this.lines[i].material.color.set( 0x0000ff );
+		this.lines[i].material.color.set( 'white' );
 
 	}
 	
