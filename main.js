@@ -19,7 +19,7 @@ var rThresh = 5.5,
   dForce = 0.0221* metaMult,
   distance = 2.1;
   rotate=true,
-  lifespan = 600,
+  lifespan = 300,
   somethingDied=false,
   loaded=false;
   forceMult = 1;
@@ -193,8 +193,10 @@ window.onload = function(){
     
     bassoon.connect(delay);
     loaded = true;
+    
     makeZygote();
   });
+  // loaded = true;
 
   // //initialize notes
   // makeSpectrum(21);
@@ -210,6 +212,8 @@ window.onload = function(){
 
 
  clock = setInterval(cycle, lifespan/60*1000)
+
+ // makeZygote();
 }
 
 

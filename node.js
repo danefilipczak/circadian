@@ -1,3 +1,11 @@
+bigNotes = [];
+addNote = function(nn, time){
+	var luv = new CorAnglais(ac);
+	luv.play(nn-12, 0, time);
+	// luv.stop(time);
+	bigNotes.push(luv);
+}
+
 function Node(vec){
 	this.force = new THREE.Vector3( );
 	this.geometry = new THREE.SphereGeometry( 1.1, 24, 16 );
@@ -20,10 +28,17 @@ function Node(vec){
 
 	this.note = notes[Math.floor(Math.random() * notes.length)];
 	keys[this.note].push('x');
-	if(loaded){bassoon.play(this.note, ac.currentTime, {loop: true, gain:1/keys[this.note].length, attack:1, duration:this.lifespan/60})};
-
+	// if(loaded){bassoon.play(this.note, ac.currentTime, {loop: true, gain:1/keys[this.note].length, attack:1, duration:this.lifespan/60})};
+	
+	// this.playNote();
+	
+	// console.log(this.note);
+	this.i = new CorAnglais(ac);
+	this.i.play(this.note, 0, this.lifespan/60);
+	// this.i.stop(this.lifespan/60);
 
 	//this.lines=[];
+	// addNote(this.note, this.lifespan/60);
 
 
 	//var line = new THREE.Line(geometry, material);
@@ -45,6 +60,12 @@ function Node(vec){
 
 }
 
+// Node.prototype.playNote = function(){
+// 	this.i = new CorAnglais(ac);
+// 	this.i.play(this.note);
+// 	this.i.stop(this.lifespan/60);
+// }
+
 Node.prototype.age = function(){
 	this.deathClock--;
 	if(this.deathClock<0){
@@ -58,6 +79,8 @@ Node.prototype.age = function(){
 
 
 Node.prototype.die = function(){
+	// self = this;
+	// this.i.stop();
 	//first pick the closest connected node;
 	var shortestD = 100;
 	var closest;
@@ -213,6 +236,7 @@ Node.prototype.growMidpoint = function(neighbor){
 
 		var halfway = iVec.lerp(jVec, 0.5);
 		var bud = new Node(halfway);
+
 		
 		var overlap = intersect(this.linkedTo, neighbor.linkedTo);
 		for(var k = 0;k<overlap.length; k++){
@@ -223,8 +247,10 @@ Node.prototype.growMidpoint = function(neighbor){
 		bud.makeLink(this)
 		neighbor.makeLink(bud);
 		this.makeLink(bud);
-		
+
 		nodes.push(bud);
+		
+		// nodes.push(bud);
 	}
 }
 

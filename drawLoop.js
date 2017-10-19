@@ -68,20 +68,20 @@ if(nodes.length>1){
 
 
   // update the picking ray with the camera and mouse position
-  raycaster.setFromCamera( mouse, camera );
+  // raycaster.setFromCamera( mouse, camera );
 
   // calculate objects intersecting the picking ray
-  selected = raycaster.intersectObjects( scene.children, true );
-  //console.log(intersects[0].userData);
+  // selected = raycaster.intersectObjects( scene.children, true );
+  // //console.log(intersects[0].userData);
 
-  for ( var i = 0; i < selected.length; i++ ) {
-    console.log(selected[i].object.userData);
-    if(selected[i].object.userData instanceof Node){
-      selected[ i ].object.material.color.set( "yellow" );
-      //console.log(intersects[i].object.userData);
-    }
+  // for ( var i = 0; i < selected.length; i++ ) {
+  //   console.log(selected[i].object.userData);
+  //   if(selected[i].object.userData instanceof Node){
+  //     selected[ i ].object.material.color.set( "yellow" );
+  //     //console.log(intersects[i].object.userData);
+  //   }
 
-  }
+  // }
 
 	//group.position.y = 0;
 }

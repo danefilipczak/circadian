@@ -52,6 +52,7 @@
 			"settings":
 			{
 				"buffer_size": 6068,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
@@ -153,7 +154,7 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 5,
 			"sheets":
 			[
 				{
@@ -317,8 +318,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								731,
+								731
 							]
 						],
 						"settings":
@@ -330,7 +331,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -359,7 +360,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
