@@ -47,7 +47,7 @@ var mouse = new THREE.Vector2();
 raycaster.linePrecision = 0.0;
 
 
-var imagePrefix = "textures/forest-skyboxes/plants/";
+var imagePrefix = "textures/forest-skyboxes/Plants/";
   var directions  = ["posx", "negx", "posy", "negy", "posz", "negz"];
   var imageSuffix = ".jpg";
   var sides = 100;
