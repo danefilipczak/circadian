@@ -15,10 +15,11 @@ function draw() {
       forceMult = 1;
 
 
-
-      localAverage(pForce * forceMult);
-      rejectAll(rThresh, rForce * forceMult);
-      maintainDistance(dForce * forceMult, distance);
+      if(nodes.length>0){
+        localAverage(pForce * forceMult);
+        rejectAll(rThresh, rForce * forceMult);
+        maintainDistance(dForce * forceMult, distance);
+      }
 
 
       //
