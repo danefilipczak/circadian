@@ -5,13 +5,14 @@
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
 		</style>
-
+		
 		<script src = "MiniSampler.js"></script>
 		<script src = "Instrument.js"></script>
 		<script src = "CorAnglais.js"></script>
 		<script src = "Bassoon.js"></script>
 
 		<script src="three.min.js"></script>
+		<script src = "OrbitControls.js"></script>
 		 <script src="ConvexGeometry.js"></script>
 
 		<script src="node.js"></script>
@@ -50,9 +51,18 @@
 		
 			};
 		}
+
+
 		var renderer = new THREE.WebGLRenderer();
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
+
+
+		document.body.onresize = function(){
+			camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+		}
 
 		if (Detector.webgl) {//Detector.webgl
 		    // init();

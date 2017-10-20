@@ -3,7 +3,7 @@
 
 //soo... cycle every max lifespan. every other cycle should be just 
 
-
+var tomes = [];
 var keys;
 var triad;
 var pause = false;
@@ -46,6 +46,25 @@ var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 raycaster.linePrecision = 0.0;
 
+
+var imagePrefix = "textures/forest-skyboxes/plants/";
+  var directions  = ["posx", "negx", "posy", "negy", "posz", "negz"];
+  var imageSuffix = ".jpg";
+  var sides = 100;
+  var skyGeometry = new THREE.BoxGeometry( sides, sides, sides ); 
+  var loader = new THREE.TextureLoader();
+
+  var materialArray = [];
+  for (var i = 0; i < 6; i++)
+    materialArray.push( new THREE.MeshBasicMaterial({
+      map: loader.load( imagePrefix + directions[i] + imageSuffix ),
+      side: THREE.BackSide
+    }));
+  var skyMaterial = new THREE.MultiMaterial( materialArray );
+  // var skyMaterial = new THREE.MeshPhongMaterial( {color:'black'} );
+  // skyMaterial.side = THREE.BackSide;
+  var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
+
 function onMouseMove( event ) {
 
   // calculate mouse position in normalized device coordinates
@@ -54,6 +73,9 @@ function onMouseMove( event ) {
   mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
   mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 }
+
+
+
 
 
 function onClick( event ){
@@ -104,6 +126,7 @@ function makeHull(){
     var hullMesh = new THREE.Mesh( hullGeom, hullMaterial );
     //hullMesh.material.side = THREE.BackSide; // back faces
     //hullMesh.renderOrder = 0;
+    tomes.push(hullMesh)
     scene.add( hullMesh );
     group.add(hullMesh)
     // mesh = new THREE.Mesh( meshGeometry, meshMaterial.clone() );
@@ -150,12 +173,15 @@ function makeCraZ(){
     }
   }
 
-  console.log(geometry);
+  // console.log(geometry);
   var bufferGeometry = new THREE.BufferGeometry;
   bufferGeometry.fromGeometry(geometry);
   var object = new THREE.Mesh(bufferGeometry);
    object.material.side = THREE.BackSide;
+   object.material.transparent = true;
+   object.material.opacity = 0.9;
   scene.add(object);
+  tomes.push(object);
   group.add(object);
   return object;
 }
@@ -188,14 +214,14 @@ window.onload = function(){
   }
   console.log(keys);
 
-  // Soundfont.instrument(ac, 'bassoon').then(function (player) {
-  //   bassoon = player;
+  Soundfont.instrument(ac, 'bassoon').then(function (player) {
+    bassoon = player;
     
-  //   bassoon.connect(delay);
-  //   loaded = true;
+    bassoon.connect(delay);
+    loaded = true;
     
-  //   makeZygote();
-  // });
+    // makeZygote();
+  });
   // loaded = true;
 
   // //initialize notes
@@ -203,17 +229,60 @@ window.onload = function(){
   triad = new Triad();
   notes = triad.notes;
 
+  var geometry = new THREE.BoxGeometry( 1, 3.5, 1 );
+  var material = new THREE.MeshPhongMaterial( {color: 'white'} );
+  var pedestal = new THREE.Mesh( geometry, material );
+  pedestal.position.y-=4.5;
+  scene.add( pedestal );
+
+  var side = 30;
+  var geometry = new THREE.BoxGeometry( side, 0.5,  side);
+  var material = new THREE.MeshPhongMaterial( {color: '#464f1b'} );
+  material.transparent = true;
+  material.opacity = 0.7;
+  var floor = new THREE.Mesh( geometry, material );
+  var offset = 6.5;
+  floor.position.y-=offset;
+  scene.add( floor );
+
+  var geometry = new THREE.BoxGeometry( 0.5, side/4,  side);
+  var northwall = new THREE.Mesh( geometry, material );
+  northwall.position.x=side/2;
+  northwall.position.y+=offset/2;
+  scene.add(northwall)
+
+  var geometry = new THREE.BoxGeometry( 0.5, side/4,  side);
+  var southwall = new THREE.Mesh( geometry, material );
+  southwall.position.x=-side/2;
+  southwall.position.y+=offset/2;
+  scene.add(southwall)
+
+  var geometry = new THREE.BoxGeometry( side, side/4,  0.5);
+  var eastwall = new THREE.Mesh( geometry, material );
+  eastwall.position.z=side/2;
+  eastwall.position.y+=offset/2;
+  scene.add(eastwall)
 
 
+  var geometry = new THREE.BoxGeometry( side, side/4,  0.5);
+  var westwall = new THREE.Mesh( geometry, material );
+  westwall.position.z=-side/2;
+  westwall.position.y+=offset/2;
+  scene.add(westwall)
 
 
+  scene.add( skyBox );
+
+
+  makeZygote();
+  orbit = new THREE.OrbitControls(camera);
 
 
 
 
  clock = setInterval(cycle, lifespan/60*1000)
 
- makeZygote();
+ 
 }
 
 
@@ -366,6 +435,8 @@ function senescence(){
 
 
 var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 0.618 );
+light.position.z = 5;
+light.position.x = 5*0.618;
 scene.add( light );
 
 
@@ -373,7 +444,7 @@ scene.add( light );
 // scene.add( directionalLight );
 // var ambientLight = new THREE.AmbientLight( 0xffffff, 0.1 );
 // scene.add( ambientLight );
-scene.background = new THREE.Color( 'olive' );
+scene.background = new THREE.Color( 'white' );
 
 
 

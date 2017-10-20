@@ -24,7 +24,7 @@ var Instrument = function(audioContext){
 Instrument.prototype.play = function(nn, when, stop){
 
 	if(nn>this.range.high || nn<this.range.low){
-		console.log('that note\'s out of range - this instrument can play from ' + this.range.low + ' to ' + this.range.high);
+		console.log('the note ' + nn + ' is out of range - this instrument can play from ' + this.range.low + ' to ' + this.range.high);
 		// if(this.sampler){this.stop()};
 		return;
 	}

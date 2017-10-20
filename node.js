@@ -28,18 +28,22 @@ function Node(vec){
 
 	this.note = notes[Math.floor(Math.random() * notes.length)];
 	keys[this.note].push('x');
-	// if(loaded){bassoon.play(this.note, ac.currentTime, {loop: true, gain:1/keys[this.note].length, attack:1, duration:this.lifespan/60})};
+	if(Math.random()>0.5){
+			if(loaded){bassoon.play(this.note, ac.currentTime, {loop: true, gain:1/keys[this.note].length-0.5, attack:1, duration:this.lifespan/60})};
+
+	}
 	
 	// this.playNote();
 	
 	// console.log(this.note);
-	if(this.note<CorAnglais.prototype.range.low){
+	var note = this.note - 12;
+	if(note<CorAnglais.prototype.range.low){
 		this.i = new Bassoon(ac);
 	} else {
 		this.i = new CorAnglais(ac);
 	}
 	
-	this.i.play(this.note-12, 0, this.lifespan/60);
+	this.i.play(note, 0, this.lifespan/60);
 	// this.i.stop(this.lifespan/60);
 
 	//this.lines=[];
